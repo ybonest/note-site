@@ -1,0 +1,41 @@
+const webpack = require("webpack")
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+const rules = require("./rules");
+
+const cwd = process.cwd();
+const entry = path.resolve(cwd, 'app/list');
+const outputPath = path.resolve(cwd, '_site');
+const mode = String.prototype.trim.call(process.env.NODE_ENV) === 'development' ? 'development' : 'production';
+
+module.exports = {
+  entry,
+  mode,
+  output: {
+    path: outputPath,
+    filename: 'bundle.js',
+    publicPath: './'
+  },
+  module: {
+      rules: [rules.md, rules.tsx, rules.img]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', 'jsx', '.md'],
+    alias: {
+      "@sources": path.resolve(cwd, 'sources'),
+      "@templates": path.resolve(cwd, 'templates'),
+      "@static": path.resolve(cwd, 'static'),
+      "@components": path.resolve(cwd, 'components')
+    }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './index.html',
+      inject: true,
+      hash: true,
+      path: path.resolve(cwd, '_site')
+    }),
+    new webpack.HotModuleReplacementPlugin()
+  ]
+}

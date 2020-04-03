@@ -1,0 +1,71 @@
+const marked = require('marked');
+const loaderUtils = require("loader-utils");
+
+const tempate = (content, className) => `<div class="${className}">${content}</div>`;
+
+const renderer = new class Renderer extends marked.Renderer {
+  paragraph(text) {
+    if (text.indexOf('title') !== -1 && text.indexOf('description') !== -1) {
+      const details = text.split('\n').reduce((collect, item) => {
+        const [key, content] = item.split(':');
+        let html = '';
+        if (key === 'image') {
+          html = `<img src="${content.trim().replace('@static', '/static')}"></img>\n`;
+        } else {
+          html = '<p>' + content.trim() + '</p>\n';
+        }
+        collect[key] = html;
+        return collect;
+      }, {});
+      return `${details.image}${details.title}${details.description}`; 
+    }
+    return '<p>' + text + '</p>\n';
+  }
+};
+
+class MarkedParse {
+  constructor(markdown, option) {
+    this.markdown = markdown;
+    this.option = option;
+  }
+  get markedLexer() {
+    return marked.lexer(this.markdown, this.option);
+  }
+
+  get markedAst() {
+    const header = [];
+    const body = [];
+    const hrStack = [];
+    header.links = Object.create(null);
+    body.links = Object.create(null);
+
+    this.markedLexer.forEach(item => {
+      if (hrStack.length <= 1) {
+        if (item.type === 'hr') {
+          hrStack.push(item);
+        } else {
+          header.push(item);
+        }
+      } else {
+        body.push(item);
+      }
+    })
+    return { header, body };
+  }
+
+  get html() {
+    const header = tempate(
+      marked.parser(this.markedAst.header, { renderer }),
+      'note-title'
+    );
+    const body = tempate(
+      marked.parser(this.markedAst.body, { renderer }),
+      'note-content'
+    );
+    return `${header}${body}`;
+  }
+}
+
+module.exports = function(markdown) {
+  return new MarkedParse(markdown, loaderUtils.getOptions(this)).html;
+}

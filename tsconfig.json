@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "paths": {
+      "@sources/*": ["sources/*"],
+      "@templates/*": ["templates/*"],
+      "@components/*": ["components/*"]
+    },
+    "declaration": true,
+    "target": "ES2015",
+    "allowJs": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "./lib/"
+  },
+  "include": [
+      "./src/**/*",
+      "./templates/**/*",
+      "./components/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,51 @@
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { createBrowserHistory } from "history";
+import { Card } from '@components/styled';
+
+const history = createBrowserHistory();
+
+function markdown(markdown): React.FunctionComponent  {
+  return ()  => {
+    return <div dangerouslySetInnerHTML={{ __html: markdown }} />
+  }
+};
+
+export const List = ((sources: Record<string, string>[]): React.FunctionComponent => () => {
+  return (
+    <Router history={history}>
+      <Card contentDisplay="none">
+        <Switch>
+          <Route exact path='/'>
+            {sources.map(source => (
+              <Link to={'/' + source.basename}>
+                {React.createElement(markdown(source.content), { key: source.basename })}
+              </Link>
+          ))}
+          </Route>
+        </Switch>
+      </Card>
+      <Card titleDisplay="none">
+        <Switch>
+          {sources.map(source => (
+              <Route exact path={'/' + source.basename}>
+                {React.createElement(markdown(source.content), { key: source.basename })}
+              </Route>
+          ))}
+        </Switch>
+      </Card>
+    </Router>
+  );
+})([
+  <% for (const source of sources) { %>
+    { content: require('<%= source %>'), basename: '<%= source %>' },
+  <% } %>
+])
+
+ReactDOM.render(<List />, document.getElementById('app'))
