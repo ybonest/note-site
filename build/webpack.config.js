@@ -5,7 +5,7 @@ const rules = require("./rules");
 
 const cwd = process.cwd();
 const entry = path.resolve(cwd, 'app/list');
-const outputPath = path.resolve(cwd, '_site');
+const outputPath = path.resolve(cwd, 'docs');
 const mode = String.prototype.trim.call(process.env.NODE_ENV) === 'development' ? 'development' : 'production';
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
       template: './index.html',
       inject: true,
       hash: true,
-      path: path.resolve(cwd, '_site')
+      path: outputPath// path.resolve(cwd, '_site')
     }),
     new webpack.HotModuleReplacementPlugin()
   ]
