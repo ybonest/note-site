@@ -17,7 +17,7 @@ module.exports = {
     publicPath: './'
   },
   module: {
-      rules: [rules.md, rules.tsx, rules.img]
+      rules: [rules.md, rules.tsx, rules.img, rules.css, rules.scss]
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', 'jsx', '.md'],
@@ -25,7 +25,8 @@ module.exports = {
       "@sources": path.resolve(cwd, 'sources'),
       "@templates": path.resolve(cwd, 'templates'),
       "@static": path.resolve(cwd, 'static'),
-      "@components": path.resolve(cwd, 'components')
+      "@components": path.resolve(cwd, 'components'),
+      "@scss": path.resolve(cwd, 'scss'),
     }
   },
   plugins: [

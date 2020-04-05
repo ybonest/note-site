@@ -6,7 +6,7 @@ image: @static/city.jpg
 
 ### title
 
-```js
+```javascript
 const a = '213';
 console.log(a);
 ```

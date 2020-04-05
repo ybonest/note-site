@@ -8,7 +8,19 @@ module.exports.md =   {
   ]
 }
 
-module.exports.css = {}
+module.exports.css =  {
+  test: /\.css$/,
+  use: ['style-loader', 'css-loader']
+}
+
+module.exports.scss = {
+  test: /\.scss$/,
+  use: [
+    "style-loader",
+    "css-loader",
+    "sass-loader"
+  ]
+}
 
 module.exports.tsx = {
   test: /\.tsx?$/,

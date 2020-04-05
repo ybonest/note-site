@@ -1,5 +1,11 @@
 const marked = require('marked');
 const loaderUtils = require("loader-utils");
+const hljs = require('highlight.js');
+
+const highlight = function(code, lang) {
+  console.log(code, lang)
+  return hljs.highlight(lang, code).value;
+}
 
 const tempate = (content, className) => `<div class="${className}">${content}</div>`;
 
@@ -54,12 +60,25 @@ class MarkedParse {
   }
 
   get html() {
+    const options = { 
+      renderer, 
+      highlight,
+      langPrefix:'hljs ',
+      pedantic: false,
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      xhtml: false
+    };
     const header = tempate(
-      marked.parser(this.markedAst.header, { renderer }),
+      marked.parser(this.markedAst.header, options),
       'note-title'
     );
     const body = tempate(
-      marked.parser(this.markedAst.body, { renderer }),
+      marked.parser(this.markedAst.body, options),
       'note-content'
     );
     return `${header}${body}`;
