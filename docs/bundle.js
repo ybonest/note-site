@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "9c1b05e7fe104ba7fa58";
+/******/ 	var hotCurrentHash = "5882edce19b8f4a316da";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1287,7 +1287,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// Module\nvar code = \"<hr>\\n<p>title: Contributing\\ndescription: hahhahhhd</p>\\n<h2 id=\\\"image-staticcityjpg\\\">image: @static/city.jpg</h2>\\n<h3 id=\\\"title\\\">title</h3>\\n<p><code>js\\nconst a = &#39;213&#39;;\\nconsole.log(a);</code></p>\\n\";\n// Exports\nmodule.exports = code;\n\n//# sourceURL=webpack:///./sources/javascript/one.md?");
+eval("// Module\nvar code = \"<div class=\\\"note-title\\\"><img src=\\\"/static/city.jpg\\\"></img>\\n<p>Contributing</p>\\n<p>hahhahhhd</p>\\n</div><div class=\\\"note-content\\\"><h3>title</h3>\\n<pre><code class=\\\"undefinedjs\\\">const a = &#39;213&#39;;\\nconsole.log(a);</code></pre>\\n</div>\";\n// Exports\nmodule.exports = code;\n\n//# sourceURL=webpack:///./sources/javascript/one.md?");
 
 /***/ }),
 
@@ -1298,7 +1298,7 @@ eval("// Module\nvar code = \"<hr>\\n<p>title: Contributing\\ndescription: hahha
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// Module\nvar code = \"<hr>\\n<p>title: Contributing\\ndescription: hahhahhhd</p>\\n<h2 id=\\\"image-staticcityjpg\\\">image: @static/city.jpg</h2>\\n<h3 id=\\\"title\\\">title</h3>\\n<p><code>js\\nconst a = &#39;213&#39;;\\nconsole.log(a);</code></p>\\n\";\n// Exports\nmodule.exports = code;\n\n//# sourceURL=webpack:///./sources/test.md?");
+eval("// Module\nvar code = \"<div class=\\\"note-title\\\"><img src=\\\"/static/city.jpg\\\"></img>\\n<p>Contributing</p>\\n<p>hahhahhhd</p>\\n</div><div class=\\\"note-content\\\"><h3>title</h3>\\n<pre><code class=\\\"undefinedjs\\\">const a = &#39;213&#39;;\\nconsole.log(a);</code></pre>\\n</div>\";\n// Exports\nmodule.exports = code;\n\n//# sourceURL=webpack:///./sources/test.md?");
 
 /***/ })
 

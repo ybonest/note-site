@@ -4,13 +4,7 @@ module.exports.md =   {
   test: /\.md$/,
   use: [
     { loader: "html-loader" },
-    {
-      loader: "markdown-loader",
-      options: {
-        pedantic: true,
-      }
-    }
-    // { loader: path.resolve(__dirname, 'markdown-loader') }
+    { loader: path.resolve(__dirname, 'markdown-loader') }
   ]
 }
 
