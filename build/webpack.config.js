@@ -34,7 +34,7 @@ module.exports = {
       template: './index.html',
       inject: true,
       hash: true,
-      path: outputPath// path.resolve(cwd, '_site')
+      path: outputPath
     }),
     new webpack.HotModuleReplacementPlugin()
   ]

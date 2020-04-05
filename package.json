@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=development && webpack --config ./build/webpack.config.js",
     "start": "set NODE_ENV=development && node ./build/server.js",
-    "build_window": "set NODE_ENV=development && webpack --config ./build/webpack.config.js",
+    "build_window": "ts-node ./tools/builder.ts && set NODE_ENV=development && webpack --config ./build/webpack.config.js",
     "start_window": "set NODE_ENV=development && node ./build/server.js",
     "exec-node": "ts-node ./tools/renderer.ts"
   },

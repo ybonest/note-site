@@ -6,10 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import { Card } from '@components/styled';
-
-const history = createBrowserHistory();
 
 function markdown(markdown): React.FunctionComponent  {
   return ()  => {
@@ -19,7 +16,7 @@ function markdown(markdown): React.FunctionComponent  {
 
 export const List = ((sources: Record<string, string>[]): React.FunctionComponent => () => {
   return (
-    <Router history={history}>
+    <Router basename="note-site">
       <Card contentDisplay="none">
         <Switch>
           <Route exact path='/'>
