@@ -3,7 +3,6 @@ const loaderUtils = require("loader-utils");
 const hljs = require('highlight.js');
 
 const highlight = function(code, lang) {
-  console.log(code, lang)
   return hljs.highlight(lang, code).value;
 }
 
@@ -23,7 +22,11 @@ const renderer = new class Renderer extends marked.Renderer {
         collect[key] = html;
         return collect;
       }, {});
-      return `${details.image}${details.title}${details.description}`; 
+      let collectHtml = '';
+      if (details.image) collectHtml += details.image;
+      if (details.title) collectHtml += details.title;
+      if (details.description) collectHtml += details.description;
+      return collectHtml; 
     }
     return '<p>' + text + '</p>\n';
   }

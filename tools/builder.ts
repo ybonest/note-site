@@ -2,6 +2,7 @@ const path = require('path');
 const util = require('util');
 const fs = require('fs');
 const ejs = require('ejs');
+const mkdirp = require('mkdirp');
 
 const readdir = util.promisify(fs.readdir);
 const stats = util.promisify(fs.stat);
@@ -9,6 +10,7 @@ const readFile = util.promisify(fs.readFile);
 const cwd = process.cwd();
 const output = path.resolve(cwd, 'app');
 const basePath = path.resolve(cwd, 'sources');
+const templatePath = path.resolve(cwd, 'templates');
 
 async function collectMdFile(dir = './sources') {
   let allSourcesMap = [];
@@ -33,18 +35,45 @@ async function collectMdFile(dir = './sources') {
   return allSourcesMap;
 }
 
-async function execute_ejs(file: string, data: Record<string, any>) {
-  const ejs_content = await readFile(file, 'utf8');
-  return ejs.compile(ejs_content)(data);
+async function execute_ejs(template: string, dirname: string, data: Record<string, any>) {
+  const ejs_content = await readFile(template, 'utf8');
+  const templateAfterCompile = ejs.compile(ejs_content)(data);
+  const basename = path.basename(template, '.ejs');
+  fs.writeFileSync(path.resolve(dirname, basename), templateAfterCompile);
+}
+
+async function buildEjsTemplate(source = './templates') {
+  const baseDIR = path.resolve(cwd, source);
+  const templates = await readdir(baseDIR);
+  let collectTemplates = [];
+
+  for (const template of templates) {
+    const templateDIR = path.resolve(baseDIR, template);
+    const templateStat = await stats(templateDIR);
+    if (templateStat.isDirectory()) {
+      collectTemplates = collectTemplates.concat(await buildEjsTemplate(templateDIR));
+    } else {
+      collectTemplates.push(templateDIR);
+    }
+  }
+  return collectTemplates;
 }
 
 async function main() {
   const files = await collectMdFile();
-  const content = await execute_ejs(path.resolve(cwd, 'templates/list.tsx.ejs'), { sources: files });
+  // const content = await execute_ejs(path.resolve(cwd, 'templates/list.tsx.ejs'), { sources: files });
   if (!fs.existsSync(output)) {
     fs.mkdirSync(output);
   }
-  fs.writeFileSync(path.resolve(output, 'list.tsx'), content);
+  const templates = await buildEjsTemplate();
+  for (const template of templates) {
+    const dirname = path.dirname(template).replace(templatePath, output);
+    if (!fs.existsSync(dirname)) {
+      mkdirp.sync(path.dirname);
+    }
+    execute_ejs(template, dirname, { sources: files })
+  }
+  // fs.writeFileSync(path.resolve(output, 'list.tsx'), content);
 }
 
 main();

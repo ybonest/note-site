@@ -4,7 +4,7 @@ const path = require("path");
 const rules = require("./rules");
 
 const cwd = process.cwd();
-const entry = path.resolve(cwd, 'app/list');
+const entry = path.resolve(cwd, 'app');
 const outputPath = path.resolve(cwd, 'docs');
 const mode = String.prototype.trim.call(process.env.NODE_ENV) === 'development' ? 'development' : 'production';
 
@@ -27,6 +27,7 @@ module.exports = {
       "@static": path.resolve(cwd, 'static'),
       "@components": path.resolve(cwd, 'components'),
       "@scss": path.resolve(cwd, 'scss'),
+      "@app": path.resolve(cwd, 'app'),
     }
   },
   plugins: [

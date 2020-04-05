@@ -1,14 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {
-  HashRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import { Card } from '@components/styled';
-import 'highlight.js/styles/github.css';
-import '@scss/global.scss';
+import { Synopsis, Details, Card } from '@components/styled';
 
 function markdown(markdown): React.FunctionComponent  {
   return ()  => {
@@ -16,35 +13,45 @@ function markdown(markdown): React.FunctionComponent  {
   }
 };
 
+function RightContent() {
+  return (
+    <Card>
+      <p>Card content</p>
+      <p>Card content</p>
+      <p>Card content</p>
+    </Card>
+  );
+}
+
 export const List = ((sources: Record<string, string>[]): React.FunctionComponent => () => {
   return (
-    <Router basename="note-site">
-      <Card contentDisplay="none">
-        <Switch>
-          <Route exact path='/'>
-            {sources.map(source => (
-              <Link to={'/' + source.basename}>
-                {React.createElement(markdown(source.content), { key: source.basename })}
-              </Link>
-          ))}
-          </Route>
-        </Switch>
-      </Card>
-      <Card titleDisplay="none">
+    <React.Fragment>
+      <Switch>
+        <Route exact path='/'>
+          <Synopsis key="list" content={{ display: 'none', padding: '0px' }}>
+                {sources.map(source => (
+                  <Link key={source.basename} to={'/' + source.basename}>
+                    {React.createElement(markdown(source.content), { key: source.basename })}
+                  </Link>
+              ))}
+          </Synopsis>
+          <RightContent />
+        </Route>
+      </Switch>
         <Switch>
           {sources.map(source => (
-              <Route exact path={'/' + source.basename}>
+            <Route key={source.basename} exact path={'/' + source.basename}>
+              <Details key="details">
                 {React.createElement(markdown(source.content), { key: source.basename })}
-              </Route>
+              </Details>
+              <RightContent />
+            </Route>
           ))}
         </Switch>
-      </Card>
-    </Router>
+    </React.Fragment>
   );
 })([
   <% for (const source of sources) { %>
     { content: require('<%= source %>'), basename: '<%= source %>' },
   <% } %>
 ])
-
-ReactDOM.render(<List />, document.getElementById('app'))

@@ -1,0 +1,36 @@
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import {
+  HashRouter as Router,
+  Link
+} from "react-router-dom";
+import Menu from 'antd/es/Menu';
+import Layout from 'antd/es/layout';
+import { List } from '@app/list';
+import { Header, Card } from '@components/styled';
+import 'highlight.js/styles/github.css';
+import '@scss/global.scss';
+import 'antd/dist/antd.css';
+
+const { Content } = Layout;
+
+function App() {
+  return (
+    <Router basename="note-site">
+      <Layout style={{ minHeight: '100vh' }}>
+        <Header>
+          <Menu mode="horizontal" defaultSelectedKeys={['homepage']}>
+            <Menu.Item key="homepage">
+              <Link to="/">首页</Link>
+            </Menu.Item>
+          </Menu>
+        </Header>
+        <Content style={{ display: 'flex', margin: '0 auto' }}>
+          <List />
+        </Content>
+      </Layout>
+    </Router>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('app'))

@@ -5,7 +5,8 @@
     "paths": {
       "@sources/*": ["sources/*"],
       "@templates/*": ["templates/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@app/*": ["app/*"],
     },
     "declaration": true,
     "target": "ES2015",
@@ -15,7 +16,7 @@
     "outDir": "./lib/"
   },
   "include": [
-      "./src/**/*",
+      "./app/**/*",
       "./templates/**/*",
       "./components/**/*"
   ],
