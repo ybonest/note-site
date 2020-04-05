@@ -7,6 +7,7 @@
       "@templates/*": ["templates/*"],
       "@components/*": ["components/*"],
       "@app/*": ["app/*"],
+      "@plug/*": ["plug-in/*"]
     },
     "declaration": true,
     "target": "ES2015",
@@ -18,7 +19,8 @@
   "include": [
       "./app/**/*",
       "./templates/**/*",
-      "./components/**/*"
+      "./components/**/*",
+      "./plug-in/**/*"
   ],
   "exclude": [
     "node_modules"

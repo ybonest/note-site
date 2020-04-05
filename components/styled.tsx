@@ -7,9 +7,20 @@ interface IProps {
   content?: Partial<React.CSSProperties>;
 }
 
+export const LayoutPanel = styled(Layout)`
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+`
+
 export const Card = styled(AntdCard)`
   width: 300px;
   margin-left: 10px;
+  .ant-card-body {
+    padding: 0px !important;
+    // background: #000;
+    height: 100%;
+  }
 `
 
 export const Header = styled(Layout.Header)`

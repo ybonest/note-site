@@ -28,6 +28,7 @@ module.exports = {
       "@components": path.resolve(cwd, 'components'),
       "@scss": path.resolve(cwd, 'scss'),
       "@app": path.resolve(cwd, 'app'),
+      "@plug": path.resolve(cwd, 'plug-in'),
     }
   },
   plugins: [

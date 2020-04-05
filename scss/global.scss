@@ -1,9 +1,9 @@
 html {
   font-size: 100%;
   overflow-y: scroll;
-  background-color: #f4f5f5;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  background-color: transparent; // #000 !important; // #e9ecef
 }
 
 body {
@@ -12,7 +12,8 @@ body {
   font-size: 12px;
   line-height: 1.5em;
   margin: auto;
-  background: #fefefe;
+  // background: #f0f2f5;
+  background-color: transparent; //#000 !important;
   @media (min-width: 768px) {
     width: 600px;
   }
@@ -306,4 +307,26 @@ td {
   h3 {
     page-break-after: avoid;
   }
+}
+
+// html, body {
+//   overflow: hidden;
+//   margin: 0;
+//   background-color: #000;
+// }
+
+.instructions {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  letter-spacing: 2px;
+  pointer-events: none;
+}
+
+canvas {
+  // width: 100%;
+  position: fixed;
 }

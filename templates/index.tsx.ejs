@@ -7,7 +7,8 @@ import {
 import Menu from 'antd/es/Menu';
 import Layout from 'antd/es/layout';
 import { List } from '@app/list';
-import { Header, Card } from '@components/styled';
+import { Header, Card, LayoutPanel } from '@components/styled';
+import Rain from '@components/Rain';
 import 'highlight.js/styles/github.css';
 import '@scss/global.scss';
 import 'antd/dist/antd.css';
@@ -16,8 +17,9 @@ const { Content } = Layout;
 
 function App() {
   return (
-    <Router basename="note-site">
-      <Layout style={{ minHeight: '100vh' }}>
+    <Router>
+      <LayoutPanel>
+        <Rain />
         <Header>
           <Menu mode="horizontal" defaultSelectedKeys={['homepage']}>
             <Menu.Item key="homepage">
@@ -28,7 +30,7 @@ function App() {
         <Content style={{ display: 'flex', margin: '0 auto' }}>
           <List />
         </Content>
-      </Layout>
+      </LayoutPanel>
     </Router>
   )
 }
