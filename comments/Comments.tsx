@@ -195,7 +195,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   private get label() {
-    return window.location.hash.split('/').pop();
+    return decodeURIComponent(window.location.hash).split('/').pop();
   }
 
   private get token() {
