@@ -223,6 +223,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
       const rediect = stringifyQuery({
         client_id: this.props.client_id,
         redirect_uri: window.location.href,
+        scope: 'public_repo'
       }, 'https://github.com/login/oauth/authorize');
       window.location.href = rediect;
     }
@@ -265,7 +266,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
       { 
         labels: [label || this.label],
         title: this.label,
-        body: 'test' 
+        body: window.location.hash 
       }
     );
   }
