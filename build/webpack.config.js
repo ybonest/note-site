@@ -29,6 +29,7 @@ module.exports = {
       "@scss": path.resolve(cwd, 'scss'),
       "@app": path.resolve(cwd, 'app'),
       "@plug": path.resolve(cwd, 'plug-in'),
+      "@comments": path.resolve(cwd, 'comments'),
     }
   },
   plugins: [

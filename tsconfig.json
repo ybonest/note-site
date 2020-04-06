@@ -7,7 +7,8 @@
       "@templates/*": ["templates/*"],
       "@components/*": ["components/*"],
       "@app/*": ["app/*"],
-      "@plug/*": ["plug-in/*"]
+      "@plug/*": ["plug-in/*"],
+      "@comments/*": ["comments/*"]
     },
     "declaration": true,
     "target": "ES2015",
@@ -20,7 +21,8 @@
       "./app/**/*",
       "./templates/**/*",
       "./components/**/*",
-      "./plug-in/**/*"
+      "./plug-in/**/*",
+      "./comments/**/*"
   ],
   "exclude": [
     "node_modules"

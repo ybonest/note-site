@@ -9,6 +9,7 @@ import Layout from 'antd/es/layout';
 import { List } from '@app/list';
 import { Header, Card, LayoutPanel } from '@components/styled';
 import Rain from '@components/Rain';
+import Comments from '@comments/Comments';
 import 'highlight.js/styles/github.css';
 import '@scss/global.scss';
 import 'antd/dist/antd.css';
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <LayoutPanel>
         <Rain />
+        <Comments />
         <Header>
           <Menu mode="horizontal" defaultSelectedKeys={['homepage']}>
             <Menu.Item key="homepage">
