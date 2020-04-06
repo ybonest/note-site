@@ -51,6 +51,7 @@ interface CommentsState {
   value?: string;
   issue?: any;
   comments?: any;
+  token?: string;
 }
 
 function ajax(props: AjaxProps = {}) {
@@ -84,8 +85,8 @@ async function LoginWithCode(params: LoginParams) {
 }
 
 // 获取user信息
-async function user() {
-  return await api.get('/user');
+async function user(token) {
+  return await api.get('/user', { headers: { Authorization: `token ${token}`} });
 }
 
 interface IssuesParams {
@@ -205,10 +206,10 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     localStorage.setItem('access_token', access_token);
   }
 
-  private async getUsers() {
+  private async getUsers(token: string) {
     try {
       this.setState({
-        user: await user()
+        user: await user(token)
       })
     } catch (error) {
       console.error(error);
@@ -234,8 +235,12 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
           code: this.code
         })
         if (result.access_token) {
-          this.token = result.access_token;
-          this.getUsers();
+          this.setState({
+            token: result.access_token
+          }, () => {
+            this.token = result.access_token;
+            this.getUsers(result.access_token);
+          })
         } 
       }
     } catch (error) {
