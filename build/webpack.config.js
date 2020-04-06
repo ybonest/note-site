@@ -20,7 +20,7 @@ module.exports = {
       rules: [rules.md, rules.tsx, rules.img, rules.css, rules.scss]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', 'jsx', '.md'],
+    extensions: ['.tsx', '.ts', '.js', 'jsx', '.md', '.jpg'],
     alias: {
       "@sources": path.resolve(cwd, 'sources'),
       "@templates": path.resolve(cwd, 'templates'),

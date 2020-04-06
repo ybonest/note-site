@@ -8,7 +8,8 @@
       "@components/*": ["components/*"],
       "@app/*": ["app/*"],
       "@plug/*": ["plug-in/*"],
-      "@comments/*": ["comments/*"]
+      "@comments/*": ["comments/*"],
+      "@static/*": ["static/*"]
     },
     "declaration": true,
     "target": "ES2015",

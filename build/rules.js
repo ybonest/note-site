@@ -34,7 +34,8 @@ module.exports.img = {
     {
       loader: 'url-loader',
       options: {
-        limit: 8192
+        limit: 8192,
+        // outputPath: path.resolve(process.cwd(), 'docs')
       }
     },
   ]
