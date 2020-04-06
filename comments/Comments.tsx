@@ -311,6 +311,8 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     if (issue && value) {
       const result = await api.post(issue.comments_url, {
         body: value
+      }, {
+        Accept: 'application/vnd.github.v3.full+json'
       });
       this.setState((state) => {
         return {
