@@ -86,8 +86,9 @@ export const Details = styled.div`
   overflow: hidden;
   background: #fff;
   display: flex;
+  flex-direction: column;
   padding: 0px 15px;
-  div:nth-of-type(1) {
+  >div:nth-of-type(1) {
     flex:1;
     overflow: hidden;
   }

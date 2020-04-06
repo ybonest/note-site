@@ -1,15 +1,34 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import {
   Switch,
   Route,
   Link
 } from "react-router-dom";
 import { Synopsis, Details, Card } from '@components/styled';
-import Rain from '@components/Rain';
+import Comments from '@comments/Comments';
+
+function getClient() {
+  const host = window.location.host;
+  const options = { owner: 'ybonest', repo: 'note-site' };
+  if (host === 'localhost:8080') {
+    Object.assign(options, {
+      client_id: 'f67c609c5ee466c83cd2',
+      client_secret: 'e956d15ba2761abad52e534424f52ba07ffbdbad',
+      redirect_uri: 'http://localhost:8080/'
+    }); 
+  }
+  if (host === 'me.ybonote.cn') {
+    Object.assign(options, {
+      client_id: '5962d91e68425e69e653',
+      client_secret: '3231ff558fe41ba150fb868effdc099b7ac8d864',
+      redirect_uri: 'https://me.ybonote.cn'
+    })
+  }
+  return options;
+}
 
 function markdown(markdown): React.FunctionComponent  {
-  return ()  => {
+  return () => {
     return <div dangerouslySetInnerHTML={{ __html: markdown }} />
   }
 };
@@ -22,6 +41,7 @@ function RightContent() {
 }
 
 export const List = ((sources: Record<string, string>[]): React.FunctionComponent => () => {
+  const options = getClient();
   return (
     <React.Fragment>
       <Switch>
@@ -41,6 +61,7 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
             <Route key={source.basename} exact path={'/' + source.basename}>
               <Details key="details">
                 {React.createElement(markdown(source.content), { key: source.basename })}
+                <Comments {...options} />
               </Details>
               <RightContent />
             </Route>
