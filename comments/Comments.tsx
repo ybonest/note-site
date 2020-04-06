@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
+import hash from '@emotion/hash';
 import Comment from 'antd/es/comment';
 import Avatar from 'antd/es/avatar';
 import Form from 'antd/es/form';
@@ -195,7 +196,8 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   private get label() {
-    return decodeURIComponent(window.location.hash).split('/').pop();
+    const source = decodeURIComponent(window.location.hash).split('/').pop();
+    return hash(source);
   }
 
   private get token() {
