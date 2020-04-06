@@ -107,7 +107,7 @@ async function getIssues(owner: string, repo: string, params: IssuesParams, auth
 }
 
 async function createIssues(owner: string, repo: string, data: CreateIssuesParams) {
-  return await api.post(`/repos/${owner}/${repo}/issues`, data, { headers });
+  return await api.post(`/repos/${owner}/${repo}/issues`, data);
 }
 
 async function getIssuesByNumbr(owner: string, repo: string, issue_number: number) {
