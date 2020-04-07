@@ -13,6 +13,7 @@ const CanvasPanel = styled.canvas`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  margin-left: 0px !important;
   z-index: -1;
 `
 

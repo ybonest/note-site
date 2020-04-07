@@ -28,6 +28,14 @@ function getClient() {
   return options;
 }
 
+function parserQuery(search = window.location.search):Record<string, string> {
+  return search.slice(1).split('&').reduce((collect, item) => {
+    const [key, value] = item.split('=');
+    collect[key] = value;
+    return collect;
+  }, {})
+}
+
 function markdown(markdown): React.FunctionComponent  {
   return () => {
     return <div dangerouslySetInnerHTML={{ __html: markdown }} />
@@ -44,6 +52,18 @@ function RightContent() {
 export const List = ((sources: Record<string, string>[]): React.FunctionComponent => () => {
   const options = getClient();
   const history = useHistory();
+  let code;
+  React.useEffect(() => {
+    const { origin, search, hash } = window.location;
+    code = parserQuery(search).code;
+    if (code) {
+      sessionStorage.setItem('code', code);
+      window.location.href = `${origin}/${hash}`;
+    }
+  })
+  if (!code) {
+    code = sessionStorage.getItem('code');
+  }
   return (
     <React.Fragment>
       <Switch>
@@ -63,7 +83,7 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
             <Route key={source.namehash} exact path={'/' + source.namehash}>
               <Details key="details">
                 {React.createElement(markdown(source.content), { key: source.namehash })}
-                <Comments {...options} filename={source.name} history={history} />
+                <Comments {...options} filename={source.name} history={history} code={code} />
               </Details>
               <RightContent />
             </Route>

@@ -37,6 +37,7 @@ interface CommentsProps {
   title?: string;
   label?: string;
   filename: string;
+  code: string;
 }
 
 interface CommentsState {
@@ -115,14 +116,6 @@ function stringifyQuery(search: Record<string, string>, baseURL?: string) {
   }, baseURL || '')
 }
 
-function parserQuery(search = window.location.search):Record<string, string> {
-  return search.slice(1).split('&').reduce((collect, item) => {
-    const [key, value] = item.split('=');
-    collect[key] = value;
-    return collect;
-  }, {})
-}
-
 const Editor = ({ onChange, onSubmit, submitting, value }: any) => (
   <div>
     <Form.Item>
@@ -172,18 +165,14 @@ const AuthButton = ({ onSubmit })=> {
 }
 
 export default class Comments extends React.PureComponent<CommentsProps, CommentsState> {
-  private code: string;
-
   public state: CommentsState = {};
 
   constructor(props: CommentsProps) {
     super(props);
-    this.code = parserQuery().code;
     this.accessToken();
   }
 
   componentWillReceiveProps() {
-    this.code = parserQuery().code;
     this.accessToken();
   }
 
@@ -210,7 +199,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   login = () => {
-    if (!this.code && !this.token) {
+    if (!this.token) {
       const rediect = stringifyQuery({
         client_id: this.props.client_id,
         scope: 'public_repo',
@@ -222,11 +211,11 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
 
   private async accessToken() {
     try {
-      if (this.code && !this.token) {
+      if (this.props.code && !this.token) {
         const result: any = await LoginWithCode({
           client_id: this.props.client_id,
           client_secret: this.props.client_secret,
-          code: this.code
+          code: this.props.code
         })
         if (result.access_token) {
           this.setState({
@@ -328,12 +317,12 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   render() {
-    const { value, comments } = this.state;
+    const { value, comments, token = this.token } = this.state;
     return (
       <div>
         <CommentsList comments={comments} />
         {
-          this.token ?
+          token ?
             <Comment
               avatar={this.avatar}
               content={ <Editor onChange={this.handleChange} onSubmit={this.handleSubmit} value={value} /> }
