@@ -2,11 +2,14 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {
   HashRouter as Router,
+  Switch,
+  Route,
   Link
 } from "react-router-dom";
 import Menu from 'antd/es/Menu';
 import Layout from 'antd/es/layout';
 import { List } from '@app/list';
+import { TagList } from '@app/tagsList';
 import { Header, Card, LayoutPanel } from '@components/styled';
 import Rain from '@components/Rain';
 import 'highlight.js/styles/github.css';
@@ -25,10 +28,16 @@ function App() {
             <Menu.Item key="homepage">
               <Link to="/">首页</Link>
             </Menu.Item>
+            <Menu.Item key="homepage">
+                <Link to="/tags">TAGS</Link>
+              </Menu.Item>
           </Menu>
         </Header>
         <Content style={{ display: 'flex', margin: '0 auto' }}>
-          <List />
+          <Switch>
+            <Route path="/tags" component={TagList} />
+            <Route path="/" component={List} />
+          </Switch>
         </Content>
       </LayoutPanel>
     </Router>

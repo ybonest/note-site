@@ -7,6 +7,24 @@ interface IProps {
   content?: Partial<React.CSSProperties>;
 }
 
+export const TagListPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const Tag = styled.span`
+  margin-right: 12px;
+  margin-bottom: 12px;
+  background-color: #f3f6f3;
+  cursor: pointer;
+  height: 30px;
+  color: inherit;
+  line-height: 30px;
+  padding-left: 22px;
+  padding-right: 22px;
+  border-radius: 30px;
+`
+
 export const LayoutPanel = styled(Layout)`
   position: relative;
   min-height: 100vh;

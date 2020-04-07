@@ -1,7 +1,8 @@
 ---
 title: Contributing
 description: hahhahhhd
-image: @static/city.jpg
+image: @static/city
+tag: test
 ---
 
 ### title

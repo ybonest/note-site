@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { Synopsis, Details, Card } from '@components/styled';
 import Comments from '@comments/Comments';
+import { TagsCard } from '@app/tags';
 
 function getClient() {
   const host = window.location.host;
@@ -85,7 +86,7 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
                 {React.createElement(markdown(source.content), { key: source.namehash })}
                 <Comments {...options} filename={source.name} history={history} code={code} />
               </Details>
-              <RightContent />
+              <TagsCard />
             </Route>
           ))}
         </Switch>

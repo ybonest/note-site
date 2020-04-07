@@ -1,0 +1,5 @@
+<% for (const source of sources) { %>
+<% if(source.headers.image.name) { %>
+export { default as <%= source.headers.image.name %> } from '<%= source.headers.image.path %>';
+<% } %>
+<% } %>
