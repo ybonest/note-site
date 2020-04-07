@@ -183,7 +183,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   private get token() {
-    return this.state.token && localStorage.getItem('access_token');
+    return this.state.token || localStorage.getItem('access_token');
   }
 
   private set token(access_token: string) {
@@ -220,7 +220,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
           client_secret: this.props.client_secret,
           code: this.props.code
         })
-        this.setState({ authentication: false })
+        
         if (result.access_token) {
           this.setState({
             token: result.access_token
@@ -228,7 +228,8 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
             this.token = result.access_token;
             this.getUsers(result.access_token);
           })
-        } 
+        }
+        this.setState({ authentication: false }) 
       }
     } catch (error) {
       this.setState({ authentication: false })
