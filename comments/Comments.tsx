@@ -7,8 +7,11 @@ import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import List from 'antd/es/list';
 import Spin from 'antd/es/spin';
+import Tabs from 'antd/es/tabs';
+import '@scss/comments.scss';
 
 const { TextArea } = Input;
+const { TabPane } = Tabs;
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 const headers = { Accept: 'application/vnd.github.v3.full+json' }; // 'application/vnd.github.machine-man-preview' };
@@ -118,15 +121,10 @@ function stringifyQuery(search: Record<string, string>, baseURL?: string) {
   }, baseURL || '')
 }
 
-const Editor = ({ onChange, onSubmit, submitting, value }: any) => (
+const Editor = ({ onChange, value, disabled }: any) => (
   <div>
     <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        Add Comment
-      </Button>
+      <TextArea rows={4} disabled={disabled} onChange={onChange} value={value} />
     </Form.Item>
   </div>
 );
@@ -158,13 +156,13 @@ const CommentsList = (props) => {
   return null;
 }
 
-const AuthButton = ({ onSubmit })=> {
-  return (
-    <Button htmlType="submit" onClick={onSubmit} type="primary">
-      auth
-    </Button>
-  );
-}
+// const AuthButton = ({ onSubmit })=> {
+//   return (
+//     <Button htmlType="submit" onClick={onSubmit} type="primary">
+//       auth
+//     </Button>
+//   );
+// }
 
 export default class Comments extends React.PureComponent<CommentsProps, CommentsState> {
   public state: CommentsState = { spinningListFetcher: true, authentication: false };
@@ -174,6 +172,10 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     this.accessToken();
   }
 
+  componentDidMount() {
+    this.getCommentsByIssue();
+  }
+  
   componentWillReceiveProps() {
     this.accessToken();
   }
@@ -257,10 +259,6 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
       { Authorization: `token ${this.token}`}
     );
   }
-  
-  componentDidMount() {
-    this.getCommentsByIssue();
-  }
 
   public async getCommentsByIssue() {
     const { client_id, client_secret } = this.props;
@@ -328,19 +326,43 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     }
   }
 
+  public get tabBarExtraContent() {
+    return !this.token && <div style={{ padding: '0px 10px' }}><a onClick={this.login}>Login</a> with GitHub</div>;
+  }
+
+  public get comments() {
+    const { value } = this.state;
+    const editor = (
+      <div className="card-container">
+        <Tabs type="card" tabBarExtraContent={this.tabBarExtraContent}>
+            <TabPane tab="评论" key="1">
+              <Editor onChange={this.handleChange} value={value} disabled={!Boolean(this.token)} />
+            </TabPane>
+        </Tabs>
+        { this.commentButton }
+      </div>
+    );
+    return <Comment avatar={this.avatar} content={ editor } />;
+  }
+
+  public get commentButton() {
+    return (
+      <Form.Item>
+        <Button disabled={!Boolean(this.token)} htmlType="submit" onClick={this.handleSubmit} type="primary">
+          Comment
+        </Button>
+      </Form.Item>
+    );
+  }
+
   render() {
-    const { value, comments, token = this.token, spinningListFetcher, authentication } = this.state;
+    const { comments, spinningListFetcher, authentication } = this.state;
     console.log(spinningListFetcher)
     return (
       <Spin tip="Loading..." spinning={spinningListFetcher}>
         <CommentsList comments={comments} />
         <Spin tip="Loading..." spinning={authentication}>
-          {token ?
-            <Comment
-              avatar={this.avatar}
-              content={ <Editor onChange={this.handleChange} onSubmit={this.handleSubmit} value={value} /> }
-            /> : 
-            <AuthButton onSubmit={this.login} />}
+          { this.comments }
         </Spin>
       </Spin>
     )
