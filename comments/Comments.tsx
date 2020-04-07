@@ -1,12 +1,12 @@
 import * as React from 'react';
 import axios from 'axios';
-import hash from '@emotion/hash';
 import Comment from 'antd/es/comment';
 import Avatar from 'antd/es/avatar';
 import Form from 'antd/es/form';
 import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import List from 'antd/es/list';
+import Spin from 'antd/es/spin';
 
 const { TextArea } = Input;
 
@@ -46,6 +46,8 @@ interface CommentsState {
   issue?: any;
   comments?: any;
   token?: string;
+  spinningListFetcher: boolean;
+  authentication?: boolean;
 }
 
 function ajax(props: AjaxProps = {}) {
@@ -99,8 +101,8 @@ async function getIssues(owner: string, repo: string, params: IssuesParams, auth
   return await api.get(`/repos/${owner}/${repo}/issues`, { params, auth });
 }
 
-async function createIssues(owner: string, repo: string, data: CreateIssuesParams) {
-  return await api.post(`/repos/${owner}/${repo}/issues`, data);
+async function createIssues(owner: string, repo: string, data: CreateIssuesParams, headers: any) {
+  return await api.post(`/repos/${owner}/${repo}/issues`, data, { headers });
 }
 
 async function getIssuesByNumbr(owner: string, repo: string, issue_number: number) {
@@ -165,7 +167,7 @@ const AuthButton = ({ onSubmit })=> {
 }
 
 export default class Comments extends React.PureComponent<CommentsProps, CommentsState> {
-  public state: CommentsState = {};
+  public state: CommentsState = { spinningListFetcher: true, authentication: false };
 
   constructor(props: CommentsProps) {
     super(props);
@@ -181,7 +183,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   private get token() {
-    return localStorage.getItem('access_token');
+    return this.state.token && localStorage.getItem('access_token');
   }
 
   private set token(access_token: string) {
@@ -212,11 +214,13 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   private async accessToken() {
     try {
       if (this.props.code && !this.token) {
+        this.setState({ authentication: true })
         const result: any = await LoginWithCode({
           client_id: this.props.client_id,
           client_secret: this.props.client_secret,
           code: this.props.code
         })
+        this.setState({ authentication: false })
         if (result.access_token) {
           this.setState({
             token: result.access_token
@@ -227,6 +231,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
         } 
       }
     } catch (error) {
+      this.setState({ authentication: false })
       console.error(error);
     }
   }
@@ -243,11 +248,12 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     return await createIssues(
       owner,
       repo,
-      { 
+      {
         labels: [label || this.label],
         title: filename,
         body: `${filename}的评论`
-      }
+      },
+      { Authorization: `token ${this.token}`}
     );
   }
   
@@ -257,22 +263,27 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
 
   public async getCommentsByIssue() {
     const { client_id, client_secret } = this.props;
-    const issue = await this.issues();
-    if (issue && issue.comments_url) {
-      const comments = await api.get(issue.comments_url, {
-        headers: {
-          Accept: 'application/vnd.github.v3.full+json'
-        },
-        auth: {
-          username: client_id,
-          password: client_secret
-        },
-        params: {
-          per_page: 10,
-          page: 1
-        }
-      });
-      if (comments) this.setState({ comments });
+    try {
+      const issue = await this.issues();
+      if (issue && issue.comments_url) {
+        const comments = await api.get(issue.comments_url, {
+          headers: {
+            Accept: 'application/vnd.github.v3.full+json'
+          },
+          auth: {
+            username: client_id,
+            password: client_secret
+          },
+          params: {
+            per_page: 10,
+            page: 1
+          }
+        });
+        this.setState({ spinningListFetcher: false })
+        if (comments) this.setState({ comments });
+      }
+    } catch (error) {
+      this.setState({ spinningListFetcher: false })
     }
   }
 
@@ -317,18 +328,20 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   render() {
-    const { value, comments, token = this.token } = this.state;
+    const { value, comments, token = this.token, spinningListFetcher, authentication } = this.state;
+    console.log(spinningListFetcher)
     return (
-      <div>
+      <Spin tip="Loading..." spinning={spinningListFetcher}>
         <CommentsList comments={comments} />
-        {
-          token ?
+        <Spin tip="Loading2..." spinning={authentication}>
+          {token ?
             <Comment
               avatar={this.avatar}
               content={ <Editor onChange={this.handleChange} onSubmit={this.handleSubmit} value={value} /> }
             /> : 
             <AuthButton onSubmit={this.login} />}
-      </div>
+        </Spin>
+      </Spin>
     )
   }
 }
