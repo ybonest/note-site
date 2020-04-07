@@ -304,7 +304,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
       const result = await api.post(issue.comments_url, {
         body: value
       }, {
-        headers
+        headers: { Authorization: `token ${this.token}`, ...headers }
       });
       this.setState((state) => {
         return {
@@ -333,7 +333,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     return (
       <Spin tip="Loading..." spinning={spinningListFetcher}>
         <CommentsList comments={comments} />
-        <Spin tip="Loading2..." spinning={authentication}>
+        <Spin tip="Loading..." spinning={authentication}>
           {token ?
             <Comment
               avatar={this.avatar}
