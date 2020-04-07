@@ -2,7 +2,8 @@ import * as React from 'react';
 import {
   Switch,
   Route,
-  Link
+  Link,
+  useHistory
 } from "react-router-dom";
 import { Synopsis, Details, Card } from '@components/styled';
 import Comments from '@comments/Comments';
@@ -42,14 +43,15 @@ function RightContent() {
 
 export const List = ((sources: Record<string, string>[]): React.FunctionComponent => () => {
   const options = getClient();
+  const history = useHistory();
   return (
     <React.Fragment>
       <Switch>
         <Route exact path='/'>
           <Synopsis key="list" content={{ display: 'none', padding: '0px' }}>
                 {sources.map(source => (
-                  <Link key={source.basename} to={'/' + source.basename}>
-                    {React.createElement(markdown(source.content), { key: source.basename })}
+                  <Link key={source.namehash} to={'/' + source.namehash}>
+                    {React.createElement(markdown(source.content), { key: source.namehash })}
                   </Link>
               ))}
           </Synopsis>
@@ -58,10 +60,10 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
       </Switch>
         <Switch>
           {sources.map(source => (
-            <Route key={source.basename} exact path={'/' + source.basename}>
+            <Route key={source.namehash} exact path={'/' + source.namehash}>
               <Details key="details">
-                {React.createElement(markdown(source.content), { key: source.basename })}
-                <Comments {...options} />
+                {React.createElement(markdown(source.content), { key: source.namehash })}
+                <Comments {...options} filename={source.name} history={history} />
               </Details>
               <RightContent />
             </Route>
@@ -71,6 +73,6 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
   );
 })([
   <% for (const source of sources) { %>
-    { content: require('<%= source %>'), basename: '<%= source %>' },
+    { content: require('<%= source.filepath %>'), namehash: '<%= source.namehash %>', name: '<%= source.name %>' },
   <% } %>
 ])

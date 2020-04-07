@@ -3,6 +3,8 @@ const util = require('util');
 const fs = require('fs');
 const ejs = require('ejs');
 const mkdirp = require('mkdirp');
+const rimraf = require('rimraf');
+import hash from '@emotion/hash';
 
 const readdir = util.promisify(fs.readdir);
 const stats = util.promisify(fs.stat);
@@ -18,6 +20,7 @@ async function collectMdFile(dir = './sources') {
   const files = await readdir(sourceDir);
 
   for (const file of files) {
+    const basename = path.basename(file, '.md');
     const fileDir = path.resolve(sourceDir, file);
     const fileStats = await stats(fileDir);
     if (fileStats.isDirectory()) {
@@ -26,9 +29,9 @@ async function collectMdFile(dir = './sources') {
     } else {
       const relativeFileDir = fileDir.replace(basePath, '@sources');
       if (path.sep === '\\') {
-        allSourcesMap.push(relativeFileDir.replace(/\\/g, '/')); // 适配window
+        allSourcesMap.push({ filepath: relativeFileDir.replace(/\\/g, '/'), namehash: hash(file), name: basename}); // 适配window
       } else {
-        allSourcesMap.push(relativeFileDir);
+        allSourcesMap.push({ filepath: relativeFileDir, namehash: hash(file), name: basename });
       }
     }
   }
@@ -59,9 +62,20 @@ async function buildEjsTemplate(source = './templates') {
   return collectTemplates;
 }
 
+async function clearDocs() {
+  const docsDir = path.resolve(cwd, './docs');
+  const docsFiles = await readdir(docsDir);
+
+  for (const file of docsFiles) {
+    if (file === 'CNAME') {
+      continue;
+    }
+    rimraf.sync(path.resolve(docsDir, file));
+  }
+}
+
 async function main() {
   const files = await collectMdFile();
-  // const content = await execute_ejs(path.resolve(cwd, 'templates/list.tsx.ejs'), { sources: files });
   if (!fs.existsSync(output)) {
     fs.mkdirSync(output);
   }
@@ -69,11 +83,11 @@ async function main() {
   for (const template of templates) {
     const dirname = path.dirname(template).replace(templatePath, output);
     if (!fs.existsSync(dirname)) {
-      mkdirp.sync(path.dirname);
+      mkdirp.sync(dirname);
     }
     execute_ejs(template, dirname, { sources: files })
   }
-  // fs.writeFileSync(path.resolve(output, 'list.tsx'), content);
+  clearDocs();
 }
 
 main();

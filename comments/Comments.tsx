@@ -7,16 +7,6 @@ import Form from 'antd/es/form';
 import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import List from 'antd/es/list';
-// import styled from 'styled-components';
-
-// const CommentPanel = styled(Comment)`
-//   .ant-comment-avatar {
-//     width: 32px;
-//     height: 32px;
-//     overflow: hidden;
-//     border-radius: 50%;
-//   }
-// `;
 
 const { TextArea } = Input;
 
@@ -25,7 +15,7 @@ const headers = { Accept: 'application/vnd.github.v3.full+json' }; // 'applicati
 const baseUrlMap = { OAuth: `${proxy}https://github.com`, api: `https://api.github.com` };
 
 interface AjaxProps {
-  type?: 'OAuth' | 'api' | 'imsun';
+  type?: 'OAuth' | 'api';
   timeout?: number;
 }
 
@@ -41,10 +31,12 @@ interface CommentsProps {
   client_id?: string;
   client_secret?: string;
   redirect_uri?: string;
+  history?: any;
   owner: string;
   repo: string;
   title?: string;
   label?: string;
+  filename: string;
 }
 
 interface CommentsState {
@@ -196,8 +188,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   private get label() {
-    const source = decodeURIComponent(window.location.hash).split('/').pop();
-    return hash(source);
+    return window.location.hash.split('/').pop();
   }
 
   private get token() {
@@ -222,8 +213,8 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
     if (!this.code && !this.token) {
       const rediect = stringifyQuery({
         client_id: this.props.client_id,
-        redirect_uri: window.location.href,
-        scope: 'public_repo'
+        scope: 'public_repo',
+        redirect_uri: window.location.href
       }, 'https://github.com/login/oauth/authorize');
       window.location.href = rediect;
     }
@@ -252,7 +243,7 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
   }
 
   private async issues() {
-    const { owner, repo, label, client_id, client_secret } = this.props;
+    const { owner, repo, label, client_id, client_secret, filename } = this.props;
     const result: any = await getIssues(owner, repo, { labels: this.label }, {
       username: client_id,
       password: client_secret
@@ -265,8 +256,8 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
       repo,
       { 
         labels: [label || this.label],
-        title: this.label,
-        body: window.location.hash 
+        title: filename,
+        body: `${filename}的评论`
       }
     );
   }
@@ -338,7 +329,6 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
 
   render() {
     const { value, comments } = this.state;
-    console.log(this.token)
     return (
       <div>
         <CommentsList comments={comments} />
