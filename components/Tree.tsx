@@ -21,17 +21,21 @@ interface Item {
 }
 
 const TreeAliasName: any = styled(AntdTree)`
-  min-width: 260px;
+  width: 260px;
   border-right: 1px solid #e6e4e4;
   display: block;
-  padding: 10px;
+  position: ${({ fixStatus }: any) => (fixStatus ? 'fixed': 'relative' )};
+  top: 0px;
+  height: 100vh;
+  margin-left: -260px;
+  padding: 10px !important;
   @media (max-width: 1000px) {
     display: none;
   }
 `
 
 function createTitle({title, namehash}: Item) {
-  return <Link to={'/' + namehash}>{title}</Link>
+  return <Link style={{ display: 'block', width: '100%', height: '100%' }} to={'/' + namehash}>{title}</Link>
 }
 
 function buildTreeData(list: Item[], tag) {
@@ -65,9 +69,21 @@ function buildTreeData(list: Item[], tag) {
   return [rootTree];
 }
 
+
+
 export function Tree(props: TreeProps) {
   const { tag, selectKey } = props;
   const expandedKeys = [selectKey.slice(1)];
+  const [fixStatus, setTreeFix] = React.useState(false);
+  React.useEffect(() => {
+    function handleScroll(e) {
+        setTreeFix(e.target.documentElement.scrollTop > 84);
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }
+  })
 
   return (
     <MarkedContext.Consumer>
@@ -76,6 +92,7 @@ export function Tree(props: TreeProps) {
         return (
           <TreeAliasName
             showLine
+            fixStatus={fixStatus}
             selectedKeys={expandedKeys}
             blockNode
             defaultExpandAll

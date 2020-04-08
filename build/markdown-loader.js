@@ -2,7 +2,7 @@ const marked = require('marked');
 const loaderUtils = require("loader-utils");
 const hljs = require('highlight.js');
 
-const highlight = function(code, lang) {
+const highlight = function(code, lang = 'js') {
   return hljs.highlight(lang, code).value;
 }
 

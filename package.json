@@ -8,7 +8,7 @@
     "start": "set NODE_ENV=development && node ./build/server.js",
     "build_window": "ts-node ./tools/builder.ts && webpack --config ./build/webpack.config.js",
     "start_window": "ts-node ./tools/builder.ts && set NODE_ENV=development && node ./build/server.js",
-    "exec-node": "ts-node ./tools/renderer.ts"
+    "exec-node": "ts-node ./tools/builder.ts"
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.5",

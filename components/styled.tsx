@@ -7,6 +7,12 @@ interface IProps {
   content?: Partial<React.CSSProperties>;
 }
 
+export const Content = styled.div`
+  padding-left: 260px;
+  position: relative;
+  display: flex;
+`
+
 export const TagListPanel = styled.div`
   display: flex;
   flex-direction: column;

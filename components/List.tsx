@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Switch, Route, Redirect, useHistory } from "react-router-dom"
 import { TagsCard } from "@components/Tags";
 import { IntroductionList } from '@components/Introduction';
-import { Details, Card, TagListPanel } from '@components/styled';
+import { Details, Card, TagListPanel, Content } from '@components/styled';
 import { Tree } from '@components/Tree';
 import Comments from '@comments/Comments';
 import { markedSource } from '@app/context';
@@ -98,11 +98,13 @@ export const List = markedSource((props) => {
         <Switch>
           {sources.map(source => (
             <Route key={source.namehash} exact path={'/' + source.namehash}>
+            <Content>
               <Tree tag={source.tag} selectKey={history.location.pathname} />
-              <Details key="details">
-                {React.createElement(markdown(source.content), { key: source.namehash })}
-                <Comments {...options} filename={source.name} history={history} code={code} />
-              </Details>
+                <Details key="details">
+                  {React.createElement(markdown(source.content), { key: source.namehash })}
+                  <Comments {...options} filename={source.name} history={history} code={code} />
+                </Details>
+              </Content>
               <TagsCard />
             </Route>
           ))}
