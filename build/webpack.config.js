@@ -2,12 +2,15 @@ const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const rules = require("./rules");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const cwd = process.cwd();
 const entry = path.resolve(cwd, 'app');
 const outputPath = path.resolve(cwd, 'docs');
 const mode = String.prototype.trim.call(process.env.NODE_ENV || '') === 'development' ? 'development' : 'production';
+const devMode = mode !== 'production';
 const optimization = {};
 
 if (mode === 'production') {
@@ -20,17 +23,19 @@ if (mode === 'production') {
       }),
     ],
     splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
+      // chunks: 'async',
+      // minSize: 30000,
+      // maxSize: 0,
+      // minChunks: 1,
+      // maxAsyncRequests: 5,
+      // maxInitialRequests: 3,
+      // automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
           priority: -10
         },
         default: {
@@ -46,7 +51,7 @@ if (mode === 'production') {
 module.exports = {
   entry,
   mode,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: devMode ? 'cheap-module-eval-source-map' : 'eval',
   optimization,
   output: {
     path: outputPath,
@@ -77,6 +82,11 @@ module.exports = {
       hash: true,
       path: outputPath
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    }),
+    new OptimizeCSSAssetsPlugin({})
   ]
 }

@@ -20,7 +20,7 @@ interface Item {
   group?: string;
 }
 
-const TreeAliasName = styled(AntdTree)`
+const TreeAliasName: any = styled(AntdTree)`
   min-width: 260px;
   border-right: 1px solid #e6e4e4;
   display: block;

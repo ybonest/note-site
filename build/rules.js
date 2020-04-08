@@ -1,6 +1,9 @@
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const mode = String.prototype.trim.call(process.env.NODE_ENV || '') === 'development' ? 'development' : 'production';
+const devMode = mode !== 'production';
 
-module.exports.md =   {
+module.exports.md = {
   test: /\.md$/,
   use: [
     { loader: "html-loader" },
@@ -10,13 +13,13 @@ module.exports.md =   {
 
 module.exports.css =  {
   test: /\.css$/,
-  use: ['style-loader', 'css-loader']
+  use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader']
 }
 
 module.exports.scss = {
   test: /\.scss$/,
   use: [
-    "style-loader",
+    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
     "css-loader",
     "sass-loader"
   ]
