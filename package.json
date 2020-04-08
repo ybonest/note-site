@@ -11,6 +11,7 @@
     "exec-node": "ts-node ./tools/renderer.ts"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.0.5",
     "@emotion/hash": "^0.8.0",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",

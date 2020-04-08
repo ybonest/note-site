@@ -1,0 +1,56 @@
+import * as React from 'react';
+
+interface Item {
+  title?: string;
+  description?: string;
+  image?: any;
+  tag?: string;
+  namehash?: string;
+  name?: string;
+  content?: string;
+}
+
+interface ContextData {
+  categoryByTag: { [key:string]: Item[] };
+  flatList: Item[];
+}
+
+const dataSource: ContextData = {
+  categoryByTag: {<% for (const tag in categoryByTag) { %>
+    '<%= tag %>': [
+      <% for (const source of categoryByTag[tag]) { %>
+        {
+          namehash: '<%= source.namehash %>',
+          name: '<%= source.name %>',
+          title: '<%= source.headers.title %>',
+          description: '<%= source.headers.description %>',
+          group: '<%= source.headers.group %>',
+          image: '<%= source.headers.image.name %>'
+        },
+      <% } %>
+    ],
+  <% } %>
+  },
+  flatList:[
+  <% for (const source of sources) { %>
+    { 
+      content: require('<%= source.filepath %>'),
+      namehash: '<%= source.namehash %>',
+      name: '<%= source.name %>',
+      title: '<%= source.headers.title %>',
+      description: '<%= source.headers.description %>',
+      tag: '<%= source.headers.tag %>',
+      group: '<%= source.headers.group %>',
+      image: '<%= source.headers.image.name %>'
+    },
+  <% } %>
+  ]
+}
+
+export const MarkedContext = React.createContext(dataSource);
+
+export const markedSource = (Element) => () => (
+  <MarkedContext.Consumer>
+    {(value) => <Element {...value} />}
+  </MarkedContext.Consumer>
+)

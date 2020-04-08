@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { Synopsis } from '@components/styled';
 import * as images from '@app/loadImages';
 

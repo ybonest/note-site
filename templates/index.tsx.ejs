@@ -8,8 +8,7 @@ import {
 } from "react-router-dom";
 import Menu from 'antd/es/Menu';
 import Layout from 'antd/es/layout';
-import { List } from '@app/list';
-import { TagList } from '@app/tagsList';
+import { List, TagList } from '@components/List';
 import { Header, Card, LayoutPanel } from '@components/styled';
 import Rain from '@components/Rain';
 import 'highlight.js/styles/github.css';
@@ -33,7 +32,7 @@ function App() {
               </Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ display: 'flex', margin: '0 auto' }}>
+        <Content style={{ display: 'flex', margin: '0 auto', paddingBottom: 15 }}>
           <Switch>
             <Route path="/tags" component={TagList} />
             <Route path="/" component={List} />

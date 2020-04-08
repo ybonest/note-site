@@ -40,6 +40,9 @@ export const Card = styled(AntdCard)`
   .ant-card-body {
     padding: 10px;
   }
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `
 
 export const Header = styled(Layout.Header)`

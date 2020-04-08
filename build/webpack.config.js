@@ -46,6 +46,7 @@ if (mode === 'production') {
 module.exports = {
   entry,
   mode,
+  devtool: 'cheap-module-eval-source-map',
   optimization,
   output: {
     path: outputPath,
