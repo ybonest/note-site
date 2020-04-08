@@ -62,7 +62,7 @@ module.exports = {
       rules: [rules.md, rules.tsx, rules.img, rules.css, rules.scss]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', 'jsx', '.md', '.jpg'],
+    extensions: ['.tsx', '.ts', '.js', 'jsx', '.md', '.jpg', '.png'],
     alias: {
       "@sources": path.resolve(cwd, 'sources'),
       "@templates": path.resolve(cwd, 'templates'),
@@ -78,6 +78,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',
+      favicon: './static/favicon.jpg',
       inject: true,
       hash: true,
       path: outputPath

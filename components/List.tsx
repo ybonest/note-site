@@ -92,7 +92,6 @@ export const List = markedSource((props) => {
           <TagListPanel>
             <IntroductionList dataSource={sources} />
           </TagListPanel>
-          <RightContent />
         </Route>
       </Switch>
         <Switch>

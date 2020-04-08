@@ -1,38 +1,34 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import Menu from 'antd/es/Menu';
-import Layout from 'antd/es/layout';
-import { List, TagList } from '@components/List';
-import { Header, Card, LayoutPanel } from '@components/styled';
-import Rain from '@components/Rain';
-import 'highlight.js/styles/github.css';
-import '@scss/global.scss';
-import 'antd/dist/antd.css';
+import * as React from "react"
+import * as ReactDOM from "react-dom"
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom"
+import Menu from "antd/es/Menu"
+import Layout from "antd/es/layout"
+import { List, TagList } from "@components/List"
+import { Header, LayoutPanel, Logo } from "@components/styled"
+import image from "@static/logo";
+import Rain from "@components/Rain"
+import "highlight.js/styles/github.css"
+import "@scss/global.scss"
+import "antd/dist/antd.css"
 
-const { Content } = Layout;
+const { Content } = Layout
 
 function App() {
   return (
     <Router>
       <LayoutPanel>
-        <Rain />
         <Header>
-          <Menu mode="horizontal" defaultSelectedKeys={['homepage']}>
+          <Logo image={image} />
+          <Menu mode="horizontal" defaultSelectedKeys={["homepage"]}>
             <Menu.Item key="homepage">
               <Link to="/">首页</Link>
             </Menu.Item>
             <Menu.Item key="tags">
-                <Link to="/tags">TAGS</Link>
-              </Menu.Item>
+              <Link to="/tags">TAGS</Link>
+            </Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ display: 'flex', margin: '0 auto' }}>
+        <Content style={{ display: "flex", margin: "0 auto" }}>
           <Switch>
             <Route path="/tags" component={TagList} />
             <Route path="/" component={List} />
@@ -43,4 +39,4 @@ function App() {
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById("app"))

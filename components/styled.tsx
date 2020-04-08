@@ -7,10 +7,21 @@ interface IProps {
   content?: Partial<React.CSSProperties>;
 }
 
+export const Logo = styled.div`
+  background:url(${(props: { image: string }) => props.image});
+  height: 100%;
+  margin-top: 4px;
+  width: 120px;
+  background-position: center;
+`
+
 export const Content = styled.div`
   padding-left: 260px;
   position: relative;
   display: flex;
+  @media (max-width: 1000px) {
+    padding-left: 0px;
+  }
 `
 
 export const TagListPanel = styled.div`
@@ -54,9 +65,12 @@ export const Card = styled(AntdCard)`
 export const Header = styled(Layout.Header)`
   background-color: rgb(255, 255, 255);
   margin-bottom: 20px;
+  display: flex;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1) !important;
+  padding: 0px !important;
+  justify-content: space-around;
   .ant-menu  {
     max-width: 1100px;
-    margin: 0 auto;
   }
 `
 
