@@ -357,7 +357,6 @@ export default class Comments extends React.PureComponent<CommentsProps, Comment
 
   render() {
     const { comments, spinningListFetcher, authentication } = this.state;
-    console.log(spinningListFetcher)
     return (
       <Spin tip="Loading..." spinning={spinningListFetcher}>
         <CommentsList comments={comments} />

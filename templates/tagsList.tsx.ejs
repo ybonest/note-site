@@ -2,25 +2,8 @@ import * as React from 'react';
 import { Switch, Route, Link, Redirect } from "react-router-dom"
 import { TagsCard } from "@app/tags";
 import { TagListPanel, Synopsis } from '@components/styled';
-import * as images from '@app/loadImages';
+import { IntroductionList } from '@components/introduction';
 
-function Introduction(props) {
-  return (
-    <Link to={'/' + props.namehash}>
-      <Synopsis>
-        <div className="note-title">
-          {props.image && props.image !== '' && <img src={images[props.image]} />}
-          <p>{props.title}</p>
-          <p>{props.description}</p>
-        </div>
-      </Synopsis>
-    </Link>
-  )
-}
-
-function IntroductionList(props) {
-  return props.dataSource.map(item => <Introduction key={item.namehash} {...item} />)
-}
 
 export const TagList = ((tags: any): React.FunctionComponent => () => {
   return (
@@ -30,7 +13,7 @@ export const TagList = ((tags: any): React.FunctionComponent => () => {
             <Redirect to={'/tags/' + Object.keys(tags)[0]} />
           </Route>
           {Object.keys(tags).map(tag =>(
-              <Route path={'/tags/' + tag} >
+              <Route key={tag} path={'/tags/' + tag} >
                 <TagListPanel>
                     <IntroductionList dataSource={tags[tag]} />
                 </TagListPanel>

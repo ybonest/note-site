@@ -15,14 +15,15 @@ export const TagListPanel = styled.div`
 export const Tag = styled.span`
   margin-right: 12px;
   margin-bottom: 12px;
-  background-color: #f3f6f3;
+  background-color: #dcdedc;
   cursor: pointer;
   height: 30px;
   color: inherit;
-  line-height: 30px;
+  line-height: 27px;
   padding-left: 22px;
   padding-right: 22px;
   border-radius: 30px;
+  display: inline-block;
 `
 
 export const LayoutPanel = styled(Layout)`
@@ -34,10 +35,10 @@ export const LayoutPanel = styled(Layout)`
 export const Card = styled(AntdCard)`
   width: 300px;
   margin-left: 10px;
+  height: fit-content;
+  min-height: 300px;
   .ant-card-body {
-    padding: 0px !important;
-    // background: #000;
-    height: 100%;
+    padding: 10px;
   }
 `
 

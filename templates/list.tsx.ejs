@@ -5,9 +5,10 @@ import {
   Link,
   useHistory
 } from "react-router-dom";
-import { Synopsis, Details, Card } from '@components/styled';
+import { Synopsis, Details, Card, TagListPanel } from '@components/styled';
 import Comments from '@comments/Comments';
 import { TagsCard } from '@app/tags';
+import { IntroductionList } from '@components/introduction';
 
 function getClient() {
   const host = window.location.host;
@@ -69,13 +70,9 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
     <React.Fragment>
       <Switch>
         <Route exact path='/'>
-          <Synopsis key="list" content={{ display: 'none', padding: '0px' }}>
-                {sources.map(source => (
-                  <Link key={source.namehash} to={'/' + source.namehash}>
-                    {React.createElement(markdown(source.content), { key: source.namehash })}
-                  </Link>
-              ))}
-          </Synopsis>
+          <TagListPanel>
+            <IntroductionList dataSource={sources} />
+          </TagListPanel>
           <RightContent />
         </Route>
       </Switch>
@@ -94,6 +91,13 @@ export const List = ((sources: Record<string, string>[]): React.FunctionComponen
   );
 })([
   <% for (const source of sources) { %>
-    { content: require('<%= source.filepath %>'), namehash: '<%= source.namehash %>', name: '<%= source.name %>' },
+    { 
+      content: require('<%= source.filepath %>'),
+      namehash: '<%= source.namehash %>',
+      name: '<%= source.name %>',
+      title: '<%= source.headers.title %>',
+      description: '<%= source.headers.description %>',
+      image: '<%= source.headers.image.name %>'
+    },
   <% } %>
 ])
