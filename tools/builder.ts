@@ -22,6 +22,7 @@ const cwd = process.cwd();
 const output = path.resolve(cwd, 'app');
 const basePath = path.resolve(cwd, 'sources');
 const templatePath = path.resolve(cwd, 'templates');
+const devMode = String.prototype.trim.call(process.env.NODE_ENV || '') === 'development';
 
 interface Collect {
   title?: string;
@@ -99,7 +100,7 @@ async function execute_ejs(template: string, dirname: string, data: Record<strin
   const ejs_content = await readFile(template, 'utf8');
   const templateAfterCompile = ejs.compile(ejs_content)(data);
   const basename = path.basename(template, '.ejs');
-  fs.writeFileSync(path.resolve(dirname, basename), prettier.format(templateAfterCompile, { semi: false, parser: "babel" }));
+  fs.writeFileSync(path.resolve(dirname, basename), prettier.format(templateAfterCompile, { semi: true, parser: "babel" }));
 }
 
 async function buildEjsTemplate(source = './templates') {
@@ -120,6 +121,9 @@ async function buildEjsTemplate(source = './templates') {
 }
 
 async function clearDocs() {
+  if (devMode) {
+    return;
+  }
   const docsDir = path.resolve(cwd, './docs');
   const docsFiles = await readdir(docsDir);
 

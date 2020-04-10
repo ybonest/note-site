@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --config ./build/webpack.config.js",
+    "build": "ts-node ./tools/builder.ts && webpack --config ./build/webpack.config.js",
     "start": "set NODE_ENV=development && node ./build/server.js",
     "build_window": "ts-node ./tools/builder.ts && webpack --config ./build/webpack.config.js",
-    "start_window": "ts-node ./tools/builder.ts && set NODE_ENV=development && node ./build/server.js",
+    "start_window": "set NODE_ENV=development && ts-node ./tools/builder.ts && node ./build/server.js",
     "exec-node": "ts-node ./tools/builder.ts"
   },
   "dependencies": {
