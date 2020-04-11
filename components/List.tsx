@@ -35,41 +35,13 @@ function parserQuery(search = window.location.search):Record<string, string> {
   }, {})
 }
 
-export const TagList = markedSource((props) => {
-  const { categoryByTag: tags } = props;
-  return (
-    <React.Fragment>
-        <Switch>
-          <Route exact path='/tags'>
-            <Redirect to={'/tags/' + Object.keys(tags)[0]} />
-          </Route>
-          {Object.keys(tags).map(tag =>(
-              <Route key={tag} path={'/tags/' + tag} >
-                <TagListPanel>
-                    <IntroductionList dataSource={tags[tag]} />
-                </TagListPanel>
-              </Route>
-          ))}
-        </Switch>
-      <TagsCard />
-    </React.Fragment>
-  );
-});
-
 function markdown(markdown): React.FunctionComponent  {
   return () => {
     return <div dangerouslySetInnerHTML={{ __html: markdown }} />
   }
 };
 
-function RightContent() {
-  return (
-    <Card>
-    </Card>
-  );
-}
-
-export const List = markedSource((props) => {
+export default markedSource((props) => {
   const { flatList: sources } = props;
   const options = getClient();
   const history = useHistory();

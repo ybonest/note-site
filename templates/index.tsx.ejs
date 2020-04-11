@@ -1,17 +1,22 @@
-import * as React from "react"
-import * as ReactDOM from "react-dom"
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom"
-import Menu from "antd/es/Menu"
-import Layout from "antd/es/layout"
-import { List, TagList } from "@components/List"
-import { Header, LayoutPanel, Logo } from "@components/styled"
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Menu from "antd/es/Menu";
+import Layout from "antd/es/layout";
+import { Header, LayoutPanel, Logo } from "@components/styled";
+import Loading from "@components/loading";
 import image from "@static/logo";
-import Rain from "@components/Rain"
-import "highlight.js/styles/github.css"
-import "@scss/global.scss"
-import "antd/dist/antd.css"
+import "highlight.js/styles/github.css";
+import "@scss/global.scss";
+import "@scss/loading.scss";
+import "antd/dist/antd.css";
 
-const { Content } = Layout
+const { Content } = Layout;
+
+const TagList = React.lazy(() => import("@components/TagList"));
+const List = React.lazy(() => import("@components/List"));
+
+const Suspence = React.Suspense;
 
 function App() {
   return (
@@ -29,14 +34,16 @@ function App() {
           </Menu>
         </Header>
         <Content style={{ display: "flex", margin: "0 auto" }}>
-          <Switch>
-            <Route path="/tags" component={TagList} />
-            <Route path="/" component={List} />
-          </Switch>
+          <Suspence fallback={<Loading />}>
+            <Switch>
+              <Route path="/tags" component={TagList} />
+              <Route path="/" component={List} />
+            </Switch>
+          </Suspence>
         </Content>
       </LayoutPanel>
     </Router>
-  )
+  );
 }
 
-ReactDOM.render(<App />, document.getElementById("app"))
+ReactDOM.render(<App />, document.getElementById("app"));

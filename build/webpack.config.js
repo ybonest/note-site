@@ -23,20 +23,30 @@ if (mode === 'production') {
       }),
     ],
     splitChunks: {
-      // chunks: 'async',
-      // minSize: 30000,
-      // maxSize: 0,
-      // minChunks: 1,
-      // maxAsyncRequests: 5,
-      // maxInitialRequests: 3,
-      // automaticNameDelimiter: '~',
-      name: true,
       cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
+        react: {
+          test:  /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+          name: 'react',
           chunks: "all",
-          priority: -10
+          priority: 0
+        },
+        antd: {
+          test:  /[\\/]node_modules[\\/](antd|styled-components)[\\/]/,
+          name: 'antd',
+          chunks: "all",
+          priority: -1
+        },
+        'async-commons': { // 异步加载公共包、组件等
+          chunks: 'async',
+          minChunks: 2,
+          name: 'async-commons',
+          priority: -2,
+         },
+        commons: {
+          name: 'common',
+          chunks: 'initial',
+          priority: -3,
+          minChunks: 2,
         },
         default: {
           minChunks: 2,
