@@ -39,7 +39,6 @@ export const TagsCard = markedSource((props) => {
         {Object.keys(categoryByTag).map(tag => {
           const colors = colorsMap[0];
           colorsMap.push(colorsMap.shift());
-          console.log(colors, colorsMap.length, ":::::::")
           return (
             <Tag {...colors}>
               <Link key={tag} to={'/tags/' + tag}>

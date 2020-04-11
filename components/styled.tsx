@@ -65,6 +65,9 @@ export const LayoutPanel = styled(Layout)`
   position: relative;
   min-height: 100vh;
   background: transparent;
+  .ant-layout-header {
+    background: #fff;
+  }
 `
 
 export const Card = styled(AntdCard)`

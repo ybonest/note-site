@@ -15,6 +15,11 @@ const optimization = {};
 
 if (mode === 'production') {
   Object.assign(optimization, {
+    runtimeChunk: {
+      name: entrypoint => `runtimechunk~${entrypoint.name}`
+    },
+    moduleIds: 'hashed',
+    chunkIds: 'named',
     minimizer: [
       new TerserPlugin({
         cache: true,
@@ -98,6 +103,9 @@ module.exports = {
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
-    new OptimizeCSSAssetsPlugin({})
+    new OptimizeCSSAssetsPlugin(),
+    // new webpack.ids.DeterministicModuleIdsPlugin({
+    //   maxLength: 5
+    // })
   ]
 }
