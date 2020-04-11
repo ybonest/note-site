@@ -9,7 +9,7 @@ export function Introduction(props) {
       <Synopsis>
         <div className="note-title">
           {props.image && props.image !== '' && <img src={images[props.image]} />}
-          <p>{props.title}</p>
+          <p>{props.title}{props.date && <span>({props.date})</span>}</p>
           <p>{props.description}</p>
         </div>
       </Synopsis>

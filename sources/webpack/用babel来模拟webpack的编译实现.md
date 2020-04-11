@@ -1,6 +1,6 @@
 ---
 title: 用babel来模拟webpack的编译实现
-date: 2018-09-09 14:09:53
+date: 2020-04-09
 description: webpack强大不容置疑，是前端工程化体系必不可缺的一份力量，那它是怎样实现文件打包的，此处通过babel来写一个简易脚本来模拟webpack打包
 tag: webpack
 ---

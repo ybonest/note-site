@@ -1,6 +1,6 @@
 ---
 title: React源码分析之ReactElement
-date: 2018-09-11 22:30:48
+date: 2018-09-11
 description: ReactElement是React中的一些最基本接口，包括一个React对象的创建、拷贝与验证等。
 tag: React
 group: React源码系列

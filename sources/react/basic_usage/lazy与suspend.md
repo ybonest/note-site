@@ -1,6 +1,6 @@
 ---
 title: React.lazy与Suspense
-date: 2018-09-09 14:09:53
+date: 2018-09-09
 description: React.lazy与Suspense
 tag: React
 ---

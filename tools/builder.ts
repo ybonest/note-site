@@ -1,10 +1,3 @@
-// const path = require('path');
-// const util = require('util');
-// const fs = require('fs');
-// const ejs = require('ejs');
-// const mkdirp = require('mkdirp');
-// const rimraf = require('rimraf');
-// const marked = require('marked');
 import * as path from 'path';
 import * as util from 'util';
 import * as fs from 'fs';
@@ -29,6 +22,7 @@ interface Collect {
   description?: string;
   image?: any;
   tag?: string;
+  date?: string;
 }
 
 const categoryByTag = {};
@@ -135,8 +129,21 @@ async function clearDocs() {
   }
 }
 
+function compareDate(file1, file2) {
+  let date1 = file1.headers.date;
+  let date2 = file2.headers.date;
+  if (!date1 || !date2) {
+    return -1;
+  }
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  return date2 - date1;
+}
+
 async function main() {
   const files = await collectMdFile();
+  const sortFiles = files.sort(compareDate);
+
   if (!fs.existsSync(output)) {
     fs.mkdirSync(output);
   }
@@ -146,7 +153,7 @@ async function main() {
     if (!fs.existsSync(dirname)) {
       mkdirp.sync(dirname);
     }
-    execute_ejs(template, dirname, { sources: files, categoryByTag })
+    execute_ejs(template, dirname, { sources: sortFiles, categoryByTag })
   }
   clearDocs();
 }

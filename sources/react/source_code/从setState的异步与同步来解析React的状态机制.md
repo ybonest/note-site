@@ -1,6 +1,6 @@
 ---
 title: 从setState的异步与同步来解析React的状态机制
-date: 2018-09-11 22:30:48
+date: 2018-09-11
 description: 从setState的异步与同步来解析React的状态机制
 tag: React
 group: React源码系列

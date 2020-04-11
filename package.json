@@ -8,6 +8,7 @@
     "start": "set NODE_ENV=development && node ./build/server.js",
     "build_window": "ts-node ./tools/builder.ts && webpack --config ./build/webpack.config.js",
     "start_window": "set NODE_ENV=development && ts-node ./tools/builder.ts && node ./build/server.js",
+    "m": "ts-node ./tools/markdown.ts",
     "exec-node": "ts-node ./tools/builder.ts"
   },
   "dependencies": {
@@ -39,6 +40,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "commander": "^5.0.0",
     "css-loader": "^3.4.2",
     "ejs": "^3.0.2",
     "file-loader": "^6.0.0",

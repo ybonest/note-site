@@ -114,7 +114,13 @@ export const Synopsis = styled.div`
       font-weight: 600;
       color: #000000;
       overflow: hidden;
+      white-space: nowrap;
       margin: 10px 0px;
+      > span {
+        display: inline-block;
+        margin-left: 5px;
+        color: #d8d7d7;
+      }
     }
     p:nth-of-type(2) {
       color: #b2bac2;

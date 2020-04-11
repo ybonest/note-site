@@ -123,7 +123,7 @@ function stringifyQuery(search: Record<string, string>, baseURL?: string) {
 
 const Editor = ({ onChange, value, disabled }: any) => (
   <div>
-    <Form.Item>
+    <Form.Item style={{ width: '100%' }}>
       <TextArea rows={4} disabled={disabled} onChange={onChange} value={value} />
     </Form.Item>
   </div>
@@ -155,14 +155,6 @@ const CommentsList = (props) => {
   }
   return null;
 }
-
-// const AuthButton = ({ onSubmit })=> {
-//   return (
-//     <Button htmlType="submit" onClick={onSubmit} type="primary">
-//       auth
-//     </Button>
-//   );
-// }
 
 export default class Comments extends React.PureComponent<CommentsProps, CommentsState> {
   public state: CommentsState = { spinningListFetcher: true, authentication: false };

@@ -1,6 +1,6 @@
 ---
 title: redux源码系列之中间件
-date: 2018-09-15 17:48:05
+date: 2018-09-15
 description: redux源码系列之中间件
 tag: React
 group: redux系列

@@ -1,6 +1,6 @@
 ---
 title: React源码分析之ReactBaseClasses
-date: 2018-09-09 14:09:53
+date: 2018-09-09
 description: ReactBaseClasses中定义了Component与PureComponent两个基类，以及基类中的基本api，包括props、context、refs、updater、isReactComponent、setState、forceUpdate。要注意Component与PureComponent仅仅是使用ES6语法定义的模版，在项目编译时，使用这两个基类创建的组件最终还是会被转变成React对象形式。
 tag: React
 group: React源码系列

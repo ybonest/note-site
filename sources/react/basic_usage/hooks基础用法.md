@@ -1,6 +1,6 @@
 ---
 title: hooks基础用法
-date: 2018-09-09 14:09:53
+date: 2018-09-09
 description: hooks的出现使得函数式组件得以有自己的状态(useState)，更为高级的是通过useEffect我们可以模拟class组件的生命周期，使得函数式组件可以基本代替class组件
 tag: React
 ---

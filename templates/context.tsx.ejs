@@ -9,6 +9,7 @@ interface Item {
   name?: string;
   group?: string;
   content?: string;
+  date?: string;
 }
 
 interface ContextData {
@@ -26,7 +27,8 @@ const dataSource: ContextData = {
           title: '<%= source.headers.title %>',
           description: '<%= source.headers.description %>',
           group: '<%= source.headers.group %>',
-          image: '<%= source.headers.image.name %>'
+          image: '<%= source.headers.image.name %>',
+          date: '<%= source.headers.date %>'
         },
       <% } %>
     ],
@@ -42,7 +44,8 @@ const dataSource: ContextData = {
       description: '<%= source.headers.description %>',
       tag: '<%= source.headers.tag %>',
       group: '<%= source.headers.group %>',
-      image: '<%= source.headers.image.name %>'
+      image: '<%= source.headers.image.name %>',
+      date: '<%= source.headers.date %>'
     },
   <% } %>
   ]
