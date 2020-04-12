@@ -5,6 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const rules = require("./rules");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const cwd = process.cwd();
 const entry = path.resolve(cwd, 'app');
@@ -12,6 +13,8 @@ const outputPath = path.resolve(cwd, 'docs');
 const mode = String.prototype.trim.call(process.env.NODE_ENV || '') === 'development' ? 'development' : 'production';
 const devMode = mode !== 'production';
 const optimization = {};
+const developmentConfig = {};
+// const prodcutionConfig = {};
 
 if (mode === 'production') {
   Object.assign(optimization, {
@@ -19,7 +22,7 @@ if (mode === 'production') {
       name: entrypoint => `runtimechunk~${entrypoint.name}`
     },
     moduleIds: 'hashed',
-    chunkIds: 'named',
+    chunkIds: 'natural',
     minimizer: [
       new TerserPlugin({
         cache: true,
@@ -35,12 +38,12 @@ if (mode === 'production') {
           chunks: "all",
           priority: 0
         },
-        antd: {
-          test:  /[\\/]node_modules[\\/](antd|styled-components)[\\/]/,
-          name: 'antd',
-          chunks: "all",
-          priority: -1
-        },
+        // antd: {
+        //   test:  /[\\/]node_modules[\\/](antd|styled-components)[\\/]/,
+        //   name: 'antd',
+        //   chunks: "all",
+        //   priority: -1
+        // },
         'async-commons': { // 异步加载公共包、组件等
           chunks: 'async',
           minChunks: 2,
@@ -51,7 +54,7 @@ if (mode === 'production') {
           name: 'common',
           chunks: 'initial',
           priority: -3,
-          minChunks: 2,
+          // minChunks: 2,
         },
         default: {
           minChunks: 2,
@@ -61,12 +64,14 @@ if (mode === 'production') {
       }
     }
   })
+} else {
+  developmentConfig.devMode = 'eval';
 }
 
 module.exports = {
   entry,
   mode,
-  devtool: devMode ? 'cheap-module-eval-source-map' : 'eval',
+  ...developmentConfig,
   optimization,
   output: {
     path: outputPath,
@@ -101,11 +106,12 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new OptimizeCSSAssetsPlugin(),
     // new webpack.ids.DeterministicModuleIdsPlugin({
     //   maxLength: 5
     // })
+    new BundleAnalyzerPlugin({ analyzerPort: 8919 })
   ]
 }

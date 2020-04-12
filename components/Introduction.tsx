@@ -8,9 +8,11 @@ export function Introduction(props) {
     <Link to={'/' + props.namehash}>
       <Synopsis>
         <div className="note-title">
+          <div>
+            <p>{props.title}{props.date && <span>({props.date})</span>}</p>
+            <p>{props.description}</p>
+          </div>
           {props.image && props.image !== '' && <img src={images[props.image]} />}
-          <p>{props.title}{props.date && <span>({props.date})</span>}</p>
-          <p>{props.description}</p>
         </div>
       </Synopsis>
     </Link>

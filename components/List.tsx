@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Switch, Route, Redirect, useHistory } from "react-router-dom"
+import { Switch, Route, useHistory } from "react-router-dom"
 import { TagsCard } from "@components/Tags";
 import { IntroductionList } from '@components/Introduction';
-import { Details, Card, TagListPanel, Content } from '@components/styled';
+import { Details, TagListPanel, Content } from '@components/styled';
 import { Tree } from '@components/Tree';
 import Comments from '@comments/Comments';
 import { markedSource } from '@app/context';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from "react-router-dom"
 import styled from 'styled-components';
-import { default as AntdTree } from 'antd/es/tree';
+import { Tree as AntdTree } from 'antd';
 import { CarryOutOutlined  } from '@ant-design/icons';
 import { MarkedContext } from '@app/context';
 

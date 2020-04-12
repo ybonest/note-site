@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Menu from "antd/es/Menu";
-import Layout from "antd/es/layout";
+// import Menu from "antd/es/Menu";
+// import Layout from "antd/es/layout";
+import { Menu, Layout } from 'antd';
 import { Header, LayoutPanel, Logo } from "@components/styled";
 import image from "@static/logo";
 import TagList from '@components/TagList';

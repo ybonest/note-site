@@ -1,5 +1,4 @@
-import Layout from 'antd/es/layout';
-import { default as AntdCard } from 'antd/es/card';
+import { Card as AntdCard, Layout } from 'antd';
 import styled from 'styled-components';
 
 interface IProps {
@@ -108,33 +107,36 @@ export const Synopsis = styled.div`
     border-bottom: 1px solid #eae9e9;
     margin-top: -1px;
     padding: 10px 15px;
-    p {
-      margin 0px;
-      width: 80%;
-    }
-    p:nth-of-type(1) {
-      font-size: 18px;
-      font-weight: 600;
-      color: #000000;
-      overflow: hidden;
-      white-space: nowrap;
-      margin: 10px 0px;
-      > span {
-        display: inline-block;
-        margin-left: 5px;
-        color: #d8d7d7;
+    display: flex;
+    > div {
+      flex: 1;
+      p {
+        margin 0px;
+      }
+      p:nth-of-type(1) {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000000;
+        overflow: hidden;
+        white-space: nowrap;
+        margin: 10px 0px;
+        > span {
+          display: inline-block;
+          margin-left: 5px;
+          color: #d8d7d7;
+        }
+      }
+      p:nth-of-type(2) {
+        color: #b2bac2;
+        overflow : hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
-    p:nth-of-type(2) {
-      color: #b2bac2;
-      overflow : hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
+    
     img {
-      float: right;
       width: 100px;
       height: 100px;
       border-radius: 10px;
