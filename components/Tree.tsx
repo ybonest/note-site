@@ -27,7 +27,7 @@ const TreeAliasName: any = styled(AntdTree)`
   position: ${({ fixStatus }: any) => (fixStatus ? 'fixed': 'relative' )};
   top: 0px;
   height: 100vh;
-  margin-left: -260px;
+  margin-left: -260px !important;
   padding: 10px !important;
   @media (max-width: 1000px) {
     display: none;

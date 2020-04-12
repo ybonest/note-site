@@ -28,21 +28,6 @@ export const TagListPanel = styled.div`
   flex-direction: column;
 `
 
-// export const Tag = styled.span`
-//   margin-right: 12px;
-//   margin-bottom: 12px;
-//   background-color: #dcdedc;
-//   cursor: pointer;
-//   height: 30px;
-//   color: inherit;
-//   line-height: 27px;
-//   padding-left: 22px;
-//   padding-right: 22px;
-//   border-radius: 30px;
-//   display: inline-block;
-// `
-
-
 export const Tag = styled.span`
   cursor: pointer;
   display: block;
@@ -55,15 +40,12 @@ export const Tag = styled.span`
   & + span {
     margin-top: 10px;
   }
-  > a {
-    // color: ${({ color }: any) => color || '#fff'};
-  }
 `
 
 export const LayoutPanel = styled(Layout)`
   position: relative;
   min-height: 100vh;
-  background: transparent;
+  background: #fff !important;
   .ant-layout-header {
     background: #fff;
   }

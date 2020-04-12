@@ -14,7 +14,7 @@ const mode = String.prototype.trim.call(process.env.NODE_ENV || '') === 'develop
 const devMode = mode !== 'production';
 const optimization = {};
 const developmentConfig = {};
-// const prodcutionConfig = {};
+let plugins = [];
 
 if (mode === 'production') {
   Object.assign(optimization, {
@@ -38,12 +38,6 @@ if (mode === 'production') {
           chunks: "all",
           priority: 0
         },
-        // antd: {
-        //   test:  /[\\/]node_modules[\\/](antd|styled-components)[\\/]/,
-        //   name: 'antd',
-        //   chunks: "all",
-        //   priority: -1
-        // },
         'async-commons': { // 异步加载公共包、组件等
           chunks: 'async',
           minChunks: 2,
@@ -64,8 +58,17 @@ if (mode === 'production') {
       }
     }
   })
+  plugins = [
+    new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    }),
+    new OptimizeCSSAssetsPlugin(),
+    new BundleAnalyzerPlugin({ analyzerPort: 8919 })
+  ]
 } else {
-  developmentConfig.devMode = 'eval';
+  plugins = [ new webpack.HotModuleReplacementPlugin() ]
+  developmentConfig.devtool = 'eval';
 }
 
 module.exports = {
@@ -102,16 +105,6 @@ module.exports = {
       inject: true,
       hash: true,
       path: outputPath
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({
-      filename: devMode ? '[name].css' : '[name].[hash].css',
-      // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
-    }),
-    new OptimizeCSSAssetsPlugin(),
-    // new webpack.ids.DeterministicModuleIdsPlugin({
-    //   maxLength: 5
-    // })
-    new BundleAnalyzerPlugin({ analyzerPort: 8919 })
-  ]
+    })
+  ].concat(plugins)
 }

@@ -1,13 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import Comment from 'antd/es/comment';
-import Avatar from 'antd/es/avatar';
-import Form from 'antd/es/form';
-import Input from 'antd/es/input';
-import Button from 'antd/es/button';
-import List from 'antd/es/list';
-import Spin from 'antd/es/spin';
-import Tabs from 'antd/es/tabs';
+import { Comment, Avatar, Form, Input, Button, List, Spin, Tabs } from 'antd';
 import '@scss/comments.scss';
 
 const { TextArea } = Input;

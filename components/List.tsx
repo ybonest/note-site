@@ -7,6 +7,8 @@ import { Tree } from '@components/Tree';
 import Comments from '@comments/Comments';
 import { markedSource } from '@app/context';
 
+// const Comments = React.lazy(() => import('@comments/Comments'));
+
 function getClient() {
   const host = window.location.host;
   const options = { owner: 'ybonest', repo: 'note-site' };
@@ -69,8 +71,8 @@ export default markedSource((props) => {
         <Switch>
           {sources.map(source => (
             <Route key={source.namehash} exact path={'/' + source.namehash}>
-            <Content>
-              <Tree tag={source.tag} selectKey={history.location.pathname} />
+              <Content>
+                <Tree tag={source.tag} selectKey={history.location.pathname} />
                 <Details key="details">
                   {React.createElement(markdown(source.content), { key: source.namehash })}
                   <Comments {...options} filename={source.name} history={history} code={code} />
