@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const rules = require("./rules");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const cwd = process.cwd();
 const entry = path.resolve(cwd, 'app');
@@ -31,24 +32,15 @@ if (mode === 'production') {
       }),
     ],
     splitChunks: {
+      maxSize: 720000,
+      minSize: 30000,
+      automaticNameDelimiter: '.',
       cacheGroups: {
         react: {
           test:  /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
           name: 'react',
           chunks: "all",
           priority: 0
-        },
-        'async-commons': { // 异步加载公共包、组件等
-          chunks: 'async',
-          minChunks: 2,
-          name: 'async-commons',
-          priority: -2,
-         },
-        commons: {
-          name: 'common',
-          chunks: 'initial',
-          priority: -3,
-          // minChunks: 2,
         },
         default: {
           minChunks: 2,
@@ -64,7 +56,9 @@ if (mode === 'production') {
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new OptimizeCSSAssetsPlugin(),
-    new BundleAnalyzerPlugin({ analyzerPort: 8919 })
+    new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
+    // new CleanWebpackPlugin(),
+    // new webpack.HashedModuleIdsPlugin()
   ]
 } else {
   plugins = [ new webpack.HotModuleReplacementPlugin() ]
@@ -78,7 +72,7 @@ module.exports = {
   optimization,
   output: {
     path: outputPath,
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js',
     publicPath: './'
   },
   module: {
@@ -103,8 +97,9 @@ module.exports = {
       template: './index.html',
       favicon: './static/favicon.jpg',
       inject: true,
-      hash: true,
+      hash: false,
       path: outputPath
+      // chunks: ['main']
     })
   ].concat(plugins)
 }

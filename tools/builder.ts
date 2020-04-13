@@ -132,9 +132,6 @@ async function clearDocs() {
 function compareDate(file1, file2) {
   let date1 = file1.headers.date ;
   let date2 = file2.headers.date;
-  // if (!date1 || !date2) {
-  //   return -1;
-  // }
   date1 = date1 ? new Date(date1) : 0;
   date2 = date2 ? new Date(date2) : 0;
   return date2 - date1;
@@ -143,7 +140,6 @@ function compareDate(file1, file2) {
 async function main() {
   const files = await collectMdFile();
   const sortFiles = files.sort(compareDate);
-  // console.log(sortFiles)
 
   if (!fs.existsSync(output)) {
     fs.mkdirSync(output);
