@@ -3,7 +3,7 @@ title: webpack打包分析以及优化
 description: 一个前端工程化的时代，webpack必不可缺，我们也必须学会使用webpack，而如何优雅的使用webpack呢，本文会从用户体验以及浏览器缓存机制来一步步讲解webpack的配置与使用
 tag: webpack
 group: 
-date: 2020-04-12
+date: 2020-04-13
 ---
 
 webpack4融合了一些比较好的插件，配置更加的简易化，我们只需配置entry、output、loader以及plugin就能够完成项目打包，但是为了让项目包拆分的更加合理，对浏览器缓存的利用更加充分，我们往往还得细化一些配置。

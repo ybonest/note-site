@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "ts-node ./tools/builder.ts && webpack --config ./build/webpack.config.js",
-    "start": "set NODE_ENV=development && node ./build/server.js",
-    "build_window": "yarn et && webpack --config ./build/webpack.config.js",
-    "start_window": "set NODE_ENV=development && ts-node ./tools/builder.ts && node ./build/server.js",
-    "m": "ts-node ./tools/markdown.ts",
+    "build-mac": "ts-node ./tools/builder.ts && webpack --config ./build/webpack.config.js",
+    "start-mac": "set NODE_ENV=development && node ./build/server.js",
+    "build-win": "yarn et && webpack --config ./build/webpack.config.js",
+    "start-win": "set NODE_ENV=development && ts-node ./tools/builder.ts && node ./build/server.js",
+    "c-mark": "ts-node ./tools/markdown.ts",
     "et": "ts-node ./tools/builder.ts"
   },
   "dependencies": {
